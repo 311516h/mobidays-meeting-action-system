@@ -12,6 +12,8 @@
 - Codex를 사용해 `src/`, `data/`, `dashboard/`, `docs/`, `prompts/` 중심의 Python 프로젝트 구조를 만들고, `make run`으로 DuckDB 테이블을 초기화하는 최소 실행 흐름을 구성했다.
 - ChatGPT와 함께 기획안의 5페이지 구성을 검토했다. 최종 구성은 문제 정의, End-to-End Architecture, Data Model & Idempotency, LLM Extraction Reliability, Impact & Failure Handling으로 정리했다.
 - Canva 템플릿 선택 과정에서 표지, 목차, 감사 페이지를 제외하고 과제 요구사항을 직접 커버하는 본문 5장으로 압축했다.
+- Codex를 사용해 제공 transcript JSON 구조를 확인하고, `meetings -> utterances -> chunks -> action_items -> processed JSON` 흐름을 구현했다.
+- 실제 LLM API 호출 전 단계로 mock extractor를 구성해 Pydantic schema, confidence, source_utterance, reasoning, Slack payload 생성 흐름을 먼저 검증했다.
 
 ## 직접 수정한 판단 사례
 
@@ -20,6 +22,10 @@
 - AI가 제안한 표지/목차형 문서 흐름 대신, 5페이지 제한 안에서 필수 평가 항목을 모두 포함하도록 본문 중심 구성으로 수정했다.
 - LLM 결과를 바로 저장하는 흐름이 아니라 `confidence`, `source_utterance`, Pydantic validation, retry를 포함하는 신뢰성 설계로 조정했다.
 - 시스템 아키텍처 페이지에 trade-off 문장을 추가했다. STT 직접 처리보다 제공 transcript를 우선 사용해 STT 품질 변수를 줄이고, 액션아이템 추출 신뢰성 검증에 집중하기 위한 선택이다.
+- 전처리 단계에서는 원문 발화를 `text`에 보존하고, filler 제거와 약어 정규화 결과만 `normalized_text`에 저장하도록 조정했다. 원문 근거 추적성을 잃지 않기 위해서다.
+- mock extractor가 회의 후반 요약 발화에서 같은 업무를 중복 추출하는 문제가 있어, `(owner, task)` 기준 중복 제거를 추가했다.
+- CTA 관련 액션아이템은 질문한 화자가 아니라 "그건 제가 같이 챙길게요"라고 말한 수아가 담당자로 잡히도록 owner override 규칙을 추가했다.
+- `make run` 재실행 시 중복 결과가 쌓이지 않도록 action_items 저장 전 meeting 단위 기존 결과를 삭제하고 다시 적재하는 방식으로 보정했다.
 
 ## 오늘 작업 기록
 
@@ -27,3 +33,13 @@
 - DuckDB 초기 스키마 생성: `meetings`, `utterances`, `chunks`, `action_items`
 - 기획안 PDF 작성: `docs/mobidays_meeting_action_system_proposal.pdf`
 - 제출 repo 기준 작업 경로 정리: `/Users/phjeong/Desktop/mobidays-meeting-action-system`
+
+## 2026-06-02 작업 기록
+
+- 제공 transcript JSON과 mp3 파일을 `data/raw/`에 추가했다.
+- `ingest.py`에서 transcript JSON을 읽어 `meetings`, `utterances`에 적재했다.
+- `preprocess.py`에서 화자/역할 정규화, filler 제거, 광고 용어 약어 정규화를 구현했다.
+- `chunking.py`에서 발화를 4개 단위로 묶어 LLM 입력용 chunk를 생성했다.
+- `schemas.py`에 Pydantic 기반 `ActionItem`, `ActionItemRecord`, `SlackPayload` 스키마를 정의했다.
+- `llm_client.py`에 mock LLM extractor, schema validation, 중복 제거, DuckDB 저장, `action_items.json`, `slack_payload.json` export 흐름을 구현했다.
+- `make run` 실행 결과 `utterances 37`, `chunks 10`, `action_items 6` 생성까지 확인했다.
