@@ -75,6 +75,23 @@ slack payload saved: data/processed/slack_payload.json
 - Action items: `data/processed/action_items.json`
 - Slack payload sample: `data/processed/slack_payload.json`
 
+## Evaluation
+
+액션아이템 추출 품질은 gold set과 예측 결과를 비교해 precision, recall, F1로 측정합니다.
+
+```bash
+make evaluate
+```
+
+평가 기준은 다음과 같습니다.
+
+- Gold file: `data/eval/gold_action_items.json`
+- Prediction file: `data/processed/action_items.json`
+- Match rule: `owner` exact match + `task` token Jaccard similarity 0.5 이상
+- Output: prediction count, gold count, true positive, false positive, false negative, precision, recall, F1
+
+현재 샘플 기준 결과는 `precision 1.000`, `recall 0.857`, `F1 0.923`입니다. false negative 항목을 함께 출력해 다음 프롬프트/추출 규칙 개선 대상으로 사용할 수 있습니다.
+
 ## Dashboard
 
 ```bash

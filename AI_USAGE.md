@@ -16,6 +16,7 @@
 - 실제 LLM API 호출 전 단계로 mock extractor를 구성해 Pydantic schema, confidence, source_utterance, reasoning, Slack payload 생성 흐름을 먼저 검증했다.
 - Codex를 사용해 Streamlit 대시보드의 필수 위젯 구성을 설계하고, DuckDB 기반 집계 쿼리와 confidence 드릴다운 흐름을 구현했다.
 - 액션아이템 추출 프롬프트를 실제 LLM 연동 가능한 문서 형태로 구체화했다.
+- Codex를 사용해 액션아이템 추출 품질 평가 코드를 추가하고, gold set 대비 precision, recall, F1을 계산하는 검증 흐름을 구성했다.
 
 ## 직접 수정한 판단 사례
 
@@ -31,6 +32,8 @@
 - 대시보드는 랜딩 페이지가 아니라 운영자가 바로 판단할 수 있는 분석 화면으로 구성했다. 상단 KPI, 발생 추이, 담당자별 미완료, 반복 이슈 키워드, confidence 드릴다운 순서로 배치했다.
 - 반복 이슈 분석은 임베딩 대신 BoW 키워드 집계로 단순화했다. 단일 샘플 PoC에서는 구현 복잡도보다 설명 가능성과 재현성이 더 중요하다고 판단했다.
 - Streamlit 첫 실행 이메일 프롬프트와 Makefile target 충돌을 발견해 `.PHONY`와 headless 옵션을 추가했다.
+- 평가 지표는 단순 문자열 완전일치가 아니라 `owner` exact match와 `task` token Jaccard similarity를 함께 사용하도록 수정했다. 같은 업무가 자연어로 약간 다르게 표현될 수 있기 때문이다.
+- gold set에는 현재 mock extractor가 놓치는 액션아이템 1건을 포함했다. precision만 높게 보이는 결과가 아니라 recall 개선 여지를 드러내기 위한 판단이다.
 
 ## 2026-06-01 작업 기록
 
@@ -60,3 +63,5 @@
 - `Makefile`에 `.PHONY`를 추가하고, `make dashboard`가 Streamlit 서버를 안정적으로 실행하도록 headless 옵션을 적용했다.
 - `prompts/action_item_prompt.md`를 role, domain context, extraction rules, implicit R&R, JSON schema, few-shot, validation/retry policy까지 포함하도록 구체화했다.
 - `README.md`에 기술 스택 선택 근거, 아키텍처, 대시보드 위젯, 프롬프트 전략, 가정 사항을 보강했다.
+- `src/evaluate.py`와 `data/eval/gold_action_items.json`을 추가해 추출 품질 평가 지표를 계산했다.
+- `make evaluate` 실행 결과 `precision 1.000`, `recall 0.857`, `F1 0.923`을 확인했다.
