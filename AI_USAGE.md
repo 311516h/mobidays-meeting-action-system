@@ -14,6 +14,8 @@
 - Canva 템플릿 선택 과정에서 표지, 목차, 감사 페이지를 제외하고 과제 요구사항을 직접 커버하는 본문 5장으로 압축했다.
 - Codex를 사용해 제공 transcript JSON 구조를 확인하고, `meetings -> utterances -> chunks -> action_items -> processed JSON` 흐름을 구현했다.
 - 실제 LLM API 호출 전 단계로 mock extractor를 구성해 Pydantic schema, confidence, source_utterance, reasoning, Slack payload 생성 흐름을 먼저 검증했다.
+- Codex를 사용해 Streamlit 대시보드의 필수 위젯 구성을 설계하고, DuckDB 기반 집계 쿼리와 confidence 드릴다운 흐름을 구현했다.
+- 액션아이템 추출 프롬프트를 실제 LLM 연동 가능한 문서 형태로 구체화했다.
 
 ## 직접 수정한 판단 사례
 
@@ -26,8 +28,11 @@
 - mock extractor가 회의 후반 요약 발화에서 같은 업무를 중복 추출하는 문제가 있어, `(owner, task)` 기준 중복 제거를 추가했다.
 - CTA 관련 액션아이템은 질문한 화자가 아니라 "그건 제가 같이 챙길게요"라고 말한 수아가 담당자로 잡히도록 owner override 규칙을 추가했다.
 - `make run` 재실행 시 중복 결과가 쌓이지 않도록 action_items 저장 전 meeting 단위 기존 결과를 삭제하고 다시 적재하는 방식으로 보정했다.
+- 대시보드는 랜딩 페이지가 아니라 운영자가 바로 판단할 수 있는 분석 화면으로 구성했다. 상단 KPI, 발생 추이, 담당자별 미완료, 반복 이슈 키워드, confidence 드릴다운 순서로 배치했다.
+- 반복 이슈 분석은 임베딩 대신 BoW 키워드 집계로 단순화했다. 단일 샘플 PoC에서는 구현 복잡도보다 설명 가능성과 재현성이 더 중요하다고 판단했다.
+- Streamlit 첫 실행 이메일 프롬프트와 Makefile target 충돌을 발견해 `.PHONY`와 headless 옵션을 추가했다.
 
-## 오늘 작업 기록
+## 2026-06-01 작업 기록
 
 - 프로젝트 scaffold 생성 및 `make run` 실행 확인
 - DuckDB 초기 스키마 생성: `meetings`, `utterances`, `chunks`, `action_items`
@@ -43,3 +48,15 @@
 - `schemas.py`에 Pydantic 기반 `ActionItem`, `ActionItemRecord`, `SlackPayload` 스키마를 정의했다.
 - `llm_client.py`에 mock LLM extractor, schema validation, 중복 제거, DuckDB 저장, `action_items.json`, `slack_payload.json` export 흐름을 구현했다.
 - `make run` 실행 결과 `utterances 37`, `chunks 10`, `action_items 6` 생성까지 확인했다.
+
+## 2026-06-03 작업 기록
+
+- `dashboard/app.py`에 Streamlit 대시보드를 구현했다.
+- 대시보드에 필수 위젯 4개를 반영했다.
+  - 주차별 회의·액션아이템 발생 추이
+  - 담당자별 미완료 액션아이템 Top N
+  - 캠페인 / 광고주별 반복 이슈 키워드
+  - LLM 추출 confidence 분포와 낮은 항목 드릴다운
+- `Makefile`에 `.PHONY`를 추가하고, `make dashboard`가 Streamlit 서버를 안정적으로 실행하도록 headless 옵션을 적용했다.
+- `prompts/action_item_prompt.md`를 role, domain context, extraction rules, implicit R&R, JSON schema, few-shot, validation/retry policy까지 포함하도록 구체화했다.
+- `README.md`에 기술 스택 선택 근거, 아키텍처, 대시보드 위젯, 프롬프트 전략, 가정 사항을 보강했다.
