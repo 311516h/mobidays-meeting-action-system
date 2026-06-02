@@ -1,0 +1,80 @@
+[
+  {
+    "action_item_id": "act_3e4e3cd08425",
+    "meeting_id": "nova_dream_campaign_alignment_2026_06_01",
+    "chunk_id": "chunk_a8bd16dc9c3c",
+    "owner": "수아",
+    "task": "CTA 변경에 따른 전환 추적 이벤트를 함께 점검한다.",
+    "due_date": "픽셀 정리 이후",
+    "priority": "high",
+    "status": "todo",
+    "confidence": 0.86,
+    "source_utterance": "수아(퍼포먼스 마케터): 봐야 해요. 그건 제가 같이 챙길게요. 근데 그것도 결국 픽셀 정리 끝나고 나서가 깔끔하긴 해요.",
+    "reasoning": "CTA 변경 시 전환 이벤트 재점검 필요성이 명시됨"
+  },
+  {
+    "action_item_id": "act_1e0e1bf603a7",
+    "meeting_id": "nova_dream_campaign_alignment_2026_06_01",
+    "chunk_id": "chunk_4037d2bb5683",
+    "owner": "수아",
+    "task": "캠페인 세트를 분리하고 운영 계정 적용 전 광고주 컨펌을 받는다.",
+    "due_date": "수요일 오전",
+    "priority": "high",
+    "status": "todo",
+    "confidence": 0.91,
+    "source_utterance": "수아(퍼포먼스 마케터): 캠페인 세트 분리는 제가 수요일 오전까지 해놓을게요. 근데 이건 운영 계정에서 켜고 끄는 거라 광고주 컨펌 한 번 받고 가야 할 거예요.",
+    "reasoning": "화자가 직접 완료 시점과 광고주 컨펌 필요성을 언급함"
+  },
+  {
+    "action_item_id": "act_b656de89b363",
+    "meeting_id": "nova_dream_campaign_alignment_2026_06_01",
+    "chunk_id": "chunk_f0497de3d888",
+    "owner": "수아",
+    "task": "픽셀 이벤트 중복 발화 문제를 보정하고 전환 수치를 다시 산출한다.",
+    "due_date": "내일 오전",
+    "priority": "high",
+    "status": "todo",
+    "confidence": 0.9,
+    "source_utterance": "수아(퍼포먼스 마케터): 원인은 거의 본 것 같은데, 픽셀 이벤트가 중복 발화되는 건 맞아 보이고요, 보정해서 다시 돌리는 데 한 하루? 안에는 가능할 것 같아요.",
+    "reasoning": "전환 수치가 제안서 마무리의 선행 조건으로 언급됨"
+  },
+  {
+    "action_item_id": "act_24de38ce4285",
+    "meeting_id": "nova_dream_campaign_alignment_2026_06_01",
+    "chunk_id": "chunk_cfafc6332a84",
+    "owner": "수아",
+    "task": "헤드라인 변경 후 A/B 테스트를 새 카피 기준으로 다시 세팅한다.",
+    "due_date": "카피 변경 후",
+    "priority": "medium",
+    "status": "todo",
+    "confidence": 0.87,
+    "source_utterance": "수아(퍼포먼스 마케터): 어차피 헤드라인 새로 들어가면 기존 A/B는 한 번 닫고, 바뀐 카피로 다시 세팅해야 해요. 그건 제가 정리할게요. 다만 비교 기간이 한 번 끊기니까 광고주 보고할 때는 그 부분 미리 말씀드리는 게 좋을 것 같아요.",
+    "reasoning": "기존 A/B를 닫고 바뀐 카피로 다시 세팅해야 한다고 명시됨"
+  },
+  {
+    "action_item_id": "act_fe992f21a200",
+    "meeting_id": "nova_dream_campaign_alignment_2026_06_01",
+    "chunk_id": "chunk_c1b276b83766",
+    "owner": "지훈",
+    "task": "누끼 컷 또는 픽셀 보정 결과가 나오면 Slack에 바로 공유한다.",
+    "due_date": "결과 확인 즉시",
+    "priority": "medium",
+    "status": "todo",
+    "confidence": 0.84,
+    "source_utterance": "지훈(팀장): 오케이 그럼 일단 이렇게 가보고, 누끼 컷이든 픽셀이든 결과 나오는 대로 슬랙에 바로 올려주세요. 제안서는 어쨌든 목요일 오후 그대로 가는 거니까.",
+    "reasoning": "팀장이 결과 공유 채널과 시점을 명시함"
+  },
+  {
+    "action_item_id": "act_2ece296a25fd",
+    "meeting_id": "nova_dream_campaign_alignment_2026_06_01",
+    "chunk_id": "chunk_4037d2bb5683",
+    "owner": "채린",
+    "task": "비주얼 카드 순서와 빈 슬롯 자리 카피를 정리한다.",
+    "due_date": "내일 오전",
+    "priority": "medium",
+    "status": "todo",
+    "confidence": 0.88,
+    "source_utterance": "채린(콘텐츠 디자이너): 그럼 비주얼 카드 순서랑 빈 슬롯 자리 카피는 제가 오늘 저녁에 늦으면 내일 오전에 정리해둘게요.",
+    "reasoning": "화자가 직접 정리해두겠다고 명시함"
+  }
+]
