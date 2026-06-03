@@ -8,6 +8,8 @@ AUDIO_DATA_PATH = BASE_DIR / "data" / "raw" / "ko_meeting_3speakers_4min_faster.
 PROCESSED_DATA_DIR = BASE_DIR / "data" / "processed"
 ACTION_ITEMS_OUTPUT_PATH = PROCESSED_DATA_DIR / "action_items.json"
 SLACK_PAYLOAD_OUTPUT_PATH = PROCESSED_DATA_DIR / "slack_payload.json"
+SLACK_UPDATE_EVENTS_PATH = BASE_DIR / "data" / "mock" / "slack_update_events.json"
+SLACK_UPDATE_RESULT_PATH = PROCESSED_DATA_DIR / "slack_update_result.json"
 
 DEFAULT_MEETING = {
     "meeting_id": "nova_dream_campaign_alignment_2026_06_01",

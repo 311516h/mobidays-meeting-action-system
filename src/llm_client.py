@@ -257,6 +257,10 @@ def extract_and_store_action_items(db_path: Path = DB_PATH) -> dict[str, Any]:
         meeting_ids = sorted({item.meeting_id for item in action_items})
         for meeting_id in meeting_ids:
             conn.execute(
+                "DELETE FROM action_item_status_events WHERE meeting_id = ?",
+                [meeting_id],
+            )
+            conn.execute(
                 "DELETE FROM action_items WHERE meeting_id = ?",
                 [meeting_id],
             )
@@ -310,6 +314,7 @@ def build_slack_payload(action_items: list[dict[str, Any]]) -> SlackPayload:
                         f"*[{item['priority']}] {item['task']}*\n"
                         f"- 담당자: {item['owner']}\n"
                         f"- 기한: {item['due_date']}\n"
+                        f"- 상태: {item['status']}\n"
                         f"- confidence: {item['confidence']:.2f}\n"
                         f"- 근거: {item['source_utterance']}"
                     ),

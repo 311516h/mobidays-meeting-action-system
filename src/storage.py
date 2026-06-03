@@ -62,4 +62,18 @@ def init_db() -> None:
             );
             """
         )
-
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS action_item_status_events (
+                event_id VARCHAR PRIMARY KEY,
+                action_item_id VARCHAR,
+                meeting_id VARCHAR,
+                previous_status VARCHAR,
+                new_status VARCHAR,
+                actor VARCHAR,
+                note TEXT,
+                event_ts TIMESTAMP,
+                created_at TIMESTAMP
+            );
+            """
+        )

@@ -1,0 +1,28 @@
+[
+  {
+    "event_id": "slack_evt_001",
+    "action_item_id": "act_b656de89b363",
+    "new_status": "in_progress",
+    "actor": "수아",
+    "note": "픽셀 이벤트 중복 원인 확인 후 보정 작업을 시작했습니다.",
+    "event_ts": "2026-06-03T09:10:00"
+  },
+  {
+    "event_id": "slack_evt_002",
+    "owner": "채린",
+    "task_contains": "비주얼 카드 순서",
+    "new_status": "done",
+    "actor": "채린",
+    "note": "비주얼 카드 순서와 빈 슬롯 카피 정리를 완료했습니다.",
+    "event_ts": "2026-06-03T09:25:00"
+  },
+  {
+    "event_id": "slack_evt_003",
+    "owner": "지훈",
+    "task_contains": "Slack에 바로 공유",
+    "new_status": "done",
+    "actor": "지훈",
+    "note": "결과 공유 방식과 채널을 확인했습니다.",
+    "event_ts": "2026-06-03T09:40:00"
+  }
+]

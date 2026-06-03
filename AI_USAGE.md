@@ -18,6 +18,7 @@
 - 액션아이템 추출 프롬프트를 실제 LLM 연동 가능한 문서 형태로 구체화했다.
 - Codex를 사용해 액션아이템 추출 품질 평가 코드를 추가하고, gold set 대비 precision, recall, F1을 계산하는 검증 흐름을 구성했다.
 - Codex를 사용해 도입 후 4주 운영·검증 계획을 KPI, 모니터링, Go/No-Go 기준 중심으로 문서화했다.
+- Codex를 사용해 Slack mock 이벤트 기반 액션아이템 상태 업데이트 루프를 설계하고 구현했다.
 
 ## 직접 수정한 판단 사례
 
@@ -36,6 +37,7 @@
 - 평가 지표는 단순 문자열 완전일치가 아니라 `owner` exact match와 `task` token Jaccard similarity를 함께 사용하도록 수정했다. 같은 업무가 자연어로 약간 다르게 표현될 수 있기 때문이다.
 - gold set에는 현재 mock extractor가 놓치는 액션아이템 1건을 포함했다. precision만 높게 보이는 결과가 아니라 recall 개선 여지를 드러내기 위한 판단이다.
 - 운영 계획은 기능 나열이 아니라 실제 도입 판단 기준 중심으로 작성했다. 4주 후 Go/No-Go를 판단할 수 있도록 precision, recall, 검토 시간, low-confidence 비율, 담당자 수정률을 KPI로 잡았다.
+- Slack mock 업데이트는 실제 Slack API 호출 대신 이벤트 JSON을 입력으로 받도록 설계했다. 외부 전송 없이도 상태 업데이트, 중복 이벤트 방지, 처리 결과 export 흐름을 검증하기 위해서다.
 
 ## 2026-06-01 작업 기록
 
@@ -68,3 +70,5 @@
 - `src/evaluate.py`와 `data/eval/gold_action_items.json`을 추가해 추출 품질 평가 지표를 계산했다.
 - `make evaluate` 실행 결과 `precision 1.000`, `recall 0.857`, `F1 0.923`을 확인했다.
 - `docs/operation_validation_plan.md`를 추가해 4주 운영·검증 계획, KPI, 모니터링 항목, Go/No-Go 기준을 정리했다.
+- `src/slack_mock.py`와 `data/mock/slack_update_events.json`을 추가해 Slack mock 기반 액션아이템 상태 업데이트 루프를 구현했다.
+- `make slack-update`로 `todo` 액션아이템 일부를 `in_progress`, `done` 상태로 갱신하고 처리 결과를 `data/processed/slack_update_result.json`에 저장하도록 구성했다.

@@ -74,6 +74,7 @@ slack payload saved: data/processed/slack_payload.json
 - DuckDB: `data/warehouse.duckdb`
 - Action items: `data/processed/action_items.json`
 - Slack payload sample: `data/processed/slack_payload.json`
+- Slack update result: `data/processed/slack_update_result.json`
 
 ## Evaluation
 
@@ -91,6 +92,31 @@ make evaluate
 - Output: prediction count, gold count, true positive, false positive, false negative, precision, recall, F1
 
 현재 샘플 기준 결과는 `precision 1.000`, `recall 0.857`, `F1 0.923`입니다. false negative 항목을 함께 출력해 다음 프롬프트/추출 규칙 개선 대상으로 사용할 수 있습니다.
+
+## Slack Mock Update Loop
+
+Slack 전송 이후 담당자가 버튼 또는 메시지로 상태를 업데이트하는 흐름을 mock으로 구현했습니다.
+
+```bash
+make slack-update
+```
+
+입력 이벤트는 `data/mock/slack_update_events.json`에 있으며, 각 이벤트는 `action_item_id` 또는 `owner + task_contains`로 액션아이템을 찾고 `status`를 갱신합니다.
+
+지원 status:
+
+- `todo`
+- `in_progress`
+- `done`
+- `needs_review`
+
+업데이트 결과는 다음 위치에 저장됩니다.
+
+- `data/processed/slack_update_result.json`: 이벤트 처리 결과
+- `data/processed/action_items.json`: 업데이트된 action item 상태
+- `data/processed/slack_payload.json`: 최신 상태 기준 Slack payload
+
+중복 이벤트는 `action_item_status_events.event_id` 기준으로 skip되어 재실행 시 같은 이벤트가 반복 반영되지 않습니다.
 
 ## Operation Plan
 

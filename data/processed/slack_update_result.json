@@ -1,0 +1,34 @@
+{
+  "event_count": 3,
+  "updated_count": 3,
+  "skipped_count": 0,
+  "results": [
+    {
+      "event_id": "slack_evt_001",
+      "result": "updated",
+      "action_item_id": "act_b656de89b363",
+      "owner": "수아",
+      "task": "픽셀 이벤트 중복 발화 문제를 보정하고 전환 수치를 다시 산출한다.",
+      "previous_status": "todo",
+      "new_status": "in_progress"
+    },
+    {
+      "event_id": "slack_evt_002",
+      "result": "updated",
+      "action_item_id": "act_2ece296a25fd",
+      "owner": "채린",
+      "task": "비주얼 카드 순서와 빈 슬롯 자리 카피를 정리한다.",
+      "previous_status": "todo",
+      "new_status": "done"
+    },
+    {
+      "event_id": "slack_evt_003",
+      "result": "updated",
+      "action_item_id": "act_fe992f21a200",
+      "owner": "지훈",
+      "task": "누끼 컷 또는 픽셀 보정 결과가 나오면 Slack에 바로 공유한다.",
+      "previous_status": "todo",
+      "new_status": "done"
+    }
+  ]
+}
