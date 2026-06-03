@@ -17,6 +17,7 @@
 - Codex를 사용해 Streamlit 대시보드의 필수 위젯 구성을 설계하고, DuckDB 기반 집계 쿼리와 confidence 드릴다운 흐름을 구현했다.
 - 액션아이템 추출 프롬프트를 실제 LLM 연동 가능한 문서 형태로 구체화했다.
 - Codex를 사용해 액션아이템 추출 품질 평가 코드를 추가하고, gold set 대비 precision, recall, F1을 계산하는 검증 흐름을 구성했다.
+- Codex를 사용해 도입 후 4주 운영·검증 계획을 KPI, 모니터링, Go/No-Go 기준 중심으로 문서화했다.
 
 ## 직접 수정한 판단 사례
 
@@ -34,6 +35,7 @@
 - Streamlit 첫 실행 이메일 프롬프트와 Makefile target 충돌을 발견해 `.PHONY`와 headless 옵션을 추가했다.
 - 평가 지표는 단순 문자열 완전일치가 아니라 `owner` exact match와 `task` token Jaccard similarity를 함께 사용하도록 수정했다. 같은 업무가 자연어로 약간 다르게 표현될 수 있기 때문이다.
 - gold set에는 현재 mock extractor가 놓치는 액션아이템 1건을 포함했다. precision만 높게 보이는 결과가 아니라 recall 개선 여지를 드러내기 위한 판단이다.
+- 운영 계획은 기능 나열이 아니라 실제 도입 판단 기준 중심으로 작성했다. 4주 후 Go/No-Go를 판단할 수 있도록 precision, recall, 검토 시간, low-confidence 비율, 담당자 수정률을 KPI로 잡았다.
 
 ## 2026-06-01 작업 기록
 
@@ -65,3 +67,4 @@
 - `README.md`에 기술 스택 선택 근거, 아키텍처, 대시보드 위젯, 프롬프트 전략, 가정 사항을 보강했다.
 - `src/evaluate.py`와 `data/eval/gold_action_items.json`을 추가해 추출 품질 평가 지표를 계산했다.
 - `make evaluate` 실행 결과 `precision 1.000`, `recall 0.857`, `F1 0.923`을 확인했다.
+- `docs/operation_validation_plan.md`를 추가해 4주 운영·검증 계획, KPI, 모니터링 항목, Go/No-Go 기준을 정리했다.

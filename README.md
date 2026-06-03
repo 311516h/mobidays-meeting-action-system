@@ -92,6 +92,17 @@ make evaluate
 
 현재 샘플 기준 결과는 `precision 1.000`, `recall 0.857`, `F1 0.923`입니다. false negative 항목을 함께 출력해 다음 프롬프트/추출 규칙 개선 대상으로 사용할 수 있습니다.
 
+## Operation Plan
+
+도입 후 4주 운영·검증 계획은 `docs/operation_validation_plan.md`에 정리했습니다.
+
+주요 내용:
+
+- 주차별 운영 계획: baseline 구축, prompt/rule 개선, pilot workflow, rollout 판단
+- KPI: 정리 시간, precision/recall, low-confidence 비율, 담당자 수정률, 중복 적재
+- 모니터링: pipeline, data quality, LLM quality, operation 지표
+- Go/No-Go 기준: precision 0.90 이상, recall 0.85 이상, 검토 시간 15분 이하
+
 ## Dashboard
 
 ```bash
